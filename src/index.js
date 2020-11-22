@@ -4,9 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import createSagaMiddleware from 'redux-saga';
+import { createStore, compose, applyMiddleware } from "redux";
+import { Provider } from 'react-redux';
+// import store from './store';
+import rootSaga from './sagas';
+import reducer from "./reducers/index";
+
+const sagaMiddleware = createSagaMiddleware();
+
+const store = createStore(
+  reducer,
+  applyMiddleware(sagaMiddleware),
+);
+sagaMiddleware.run(rootSaga);
 ReactDOM.render(
   <React.StrictMode>
+    <Provider store={store}>
     <App />
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
